@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Security Analysis</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <!-- ANTI-TAMPERING: Warning banner (hidden by default, shown when DOM tampering detected) -->
+    <div id="tamperWarning" class="tamper-warning hidden">
+        ⚠️ TAMPERING DETECTED — DOM modification was reverted. This incident has been logged.
+    </div>
+    <div class="container">
+        <header>
+            <h1><span class="shield-icon">🔐</span></h1>
+        </header>
+
+        <main>
+            <section class="control-panel">
+                <div class="input-group">
+                    <label for="algorithm">Algorithm</label>
+                    <select id="algorithm" disabled>
+                        <option value="sha256">SHA-256</option>
+                    </select>
+                </div>
+
+                <!-- Auto-Detect Display (New Feature) -->
+                <div class="input-group"
+                    style="background: #161b22; padding: 10px; border-radius: 6px; border: 1px solid #30363d;">
+                    <label style="color: #238636; font-weight: bold;">🎯 Target (Auto-Detected)</label>
+                    <div id="autoTargetDisplay"
+                        style="font-family: monospace; color: #8b949e; word-break: break-all; font-size: 0.9em;">
+                        Waiting for password input...
+                    </div>
+                </div>
+
+                <!-- Hidden inputs for compatibility -->
+                <div class="input-group" style="display: none;">
+                    <label for="targetHash">Target Hash</label>
+                    <input type="text" id="targetHash" placeholder="Enter SHA-256 Hash" spellcheck="false">
+                </div>
+
+                <div class="input-group" style="display: none;">
+                    <label for="targetPassword" class="sub-label">...or enter password to hash</label>
+                    <div class="hash-generator">
+                        <input type="text" id="targetPassword" placeholder="e.g. password123">
+                        <button id="btnGenerateHash">Hash It</button>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="input-group">
+                    <label for="attackMode">Attack Strategy</label>
+                    <select id="attackMode">
+                        <option value="dictionary">Dictionary Attack</option>
+                        <option value="ruleBased">Rule-Based Attack</option>
+                        <option value="bruteForce">Brute Force</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic Options Area -->
+                <div id="strategyOptions" class="strategy-options">
+                    <!-- Injected via JS based on selection -->
+                    <div id="bruteOptions" class="options-panel">
+                        <label><input type="checkbox" id="useLowerCase" checked> a-z</label>
+                        <label><input type="checkbox" id="useUpperCase" checked> A-Z</label>
+                        <label><input type="checkbox" id="useNumbers" checked> 0-9</label>
+                        <label><input type="checkbox" id="useSymbols"> !@#...</label>
+                        <div class="length-control">
+                            <label>Max Len: <span id="lblMaxLength">8</span></label>
+                            <input type="range" id="maxLength" min="1" max="64" value="8">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnStart" class="action-btn start-btn">START</button>
+                <button id="btnStop" class="action-btn stop-btn hidden">STOP</button>
+            </section>
+
+            <section class="monitor-panel">
+                <div class="metric-card">
+                    <span class="metric-label">Status</span>
+                    <span id="statusText" class="metric-value status-idle">IDLE</span>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-card small">
+                        <span class="metric-label">Time</span>
+                        <span id="timer" class="metric-value">00:00.00</span>
+                    </div>
+                    <div class="metric-card small">
+                        <span class="metric-label">Speed (APS)</span>
+                        <span id="aps" class="metric-value">0</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Current Attempt</span>
+                    <span id="currentAttempt" class="metric-value monospace">...</span>
+                </div>
+                <div class="metric-card result-card hidden" id="resultCard">
+                    <span class="metric-label">Password Found!</span>
+                    <span id="foundPassword" class="metric-value success-text">UNKNOWN</span>
+                </div>
+                <div class="action-buttons" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                    <button id="btnDownloadReport" class="action-btn report-btn hidden">Download Report 📄</button>
+                    <button id="btnHistory" class="action-btn">History 🕒</button>
+                </div>
+            </section>
+
+            <!-- History Panel (Hidden by default) -->
+            <section id="historyPanel" class="hidden"
+                style="margin-top: 20px; border-top: 1px solid #30363d; padding-top: 10px;">
+                <h3>Attack History (Hashes Only)</h3>
+                <button id="btnClearHistory"
+                    style="font-size: 0.8em; color: #ff7b72; background: none; border: none; cursor: pointer; float: right;">Clear</button>
+                <div id="historyList" style="max-height: 150px; overflow-y: auto; font-size: 0.8em; color: #8b949e;">
+                    <!-- History items will be injected here -->
+                    <div style="padding: 5px; border-bottom: 1px solid #21262d;">No history yet.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>

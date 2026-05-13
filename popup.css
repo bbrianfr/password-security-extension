@@ -1,0 +1,344 @@
+:root {
+    /* Modern Auditor Theme Variables */
+    --bg-color: #F8F9FA;
+    --panel-color: #FFFFFF;
+    /* Cards and Panels */
+    --input-bg: #FFFFFF;
+    --border-color: #DDE1E6;
+    --primary-color: #0F2847;
+    /* Deep Navy Accent */
+    --secondary-color: #0F2847;
+    --error-color: #DC3545;
+    --text-primary: #2B353A;
+    --text-secondary: #6E7A83;
+
+    /* Unified Font - Times New Roman for everything */
+    --font-main: 'Times New Roman', Times, serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main) !important;
+    /* Enforce single font strictly */
+}
+
+body {
+    width: 420px;
+    /* Increased Width as requested */
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 15px;
+    /* Increased Font Size */
+    line-height: 1.5;
+    user-select: none; /* Deterrent: Prevent easy selection/inspection */
+}
+
+.container {
+    padding: 20px;
+    /* More breathing room */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 18px;
+    /* Larger Heading */
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shield-icon {
+    font-size: 24px;
+    /* Larger Icon */
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+/* Controls */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input[type="text"],
+select,
+input[type="file"] {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    /* Larger click targets */
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(15, 40, 71, 0.3);
+}
+
+.sub-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: -4px;
+    margin-bottom: 8px;
+}
+
+.hash-generator {
+    display: flex;
+    gap: 8px;
+}
+
+#targetPassword {
+    flex: 1;
+}
+
+#btnGenerateHash {
+    background-color: var(--panel-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#btnGenerateHash:hover {
+    background-color: #E2E8F0;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 8px 0;
+}
+
+/* Strategy Options */
+.strategy-options {
+    background-color: var(--panel-color);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    border-radius: 6px;
+}
+
+.options-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.options-panel label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 400;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--primary-color);
+    width: 16px;
+    /* Larger checkboxes */
+    height: 16px;
+}
+
+.length-control {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.length-control input {
+    width: 80px;
+}
+
+/* Action Buttons */
+.action-btn {
+    width: 100%;
+    padding: 14px;
+    /* Larger buttons */
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
+    transition: 0.2s;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.action-btn:hover, .start-btn:hover {
+    background-color: #1A365D; /* Darker Navy */
+}
+
+.start-btn {
+    box-shadow: 0 1px 0 rgba(15, 40, 71, 0.1);
+}
+
+.stop-btn {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.stop-btn:hover {
+    background-color: #bb2d3b;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Monitor Panel */
+.monitor-panel {
+    background-color: var(--panel-color);
+    border-radius: 6px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    margin-top: 8px;
+}
+
+.metric-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.metric-card {
+    background-color: var(--bg-color);
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.metric-card.small {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.metric-label {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.metric-value {
+    font-size: 20px;
+    /* Larger numbers */
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.status-idle {
+    color: var(--text-secondary);
+}
+
+.status-running {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.status-success {
+    color: #198754;
+    font-weight: bold;
+}
+
+.monospace {
+    /* Even for monospace data, we enforce the unified font if requested,
+       but typically hashes NEED monospace.
+       If User REALLY said "one font", I will force Segoe UI even here. */
+    font-family: var(--font-main) !important;
+    font-size: 13px;
+    word-break: break-all;
+}
+
+.result-card {
+    background-color: #F1F5F9;
+    border-color: #DDE1E6;
+}
+
+/* History Panel Styling Fixes */
+#historyPanel {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+#historyList div {
+    /* Ensure history items are light */
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* ========== ANTI-TAMPERING: Warning Banner ========== */
+.tamper-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: #DC3545;
+    color: white;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #a71d2a;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    animation: tamperFlash 0.6s ease-out;
+}
+
+.tamper-warning.hidden {
+    display: none !important;
+}
+
+/* Deterrent for tampered state - blur the content */
+body.tampered .container {
+    filter: blur(4px);
+    pointer-events: none;
+    transition: filter 0.3s ease;
+}
+
+@keyframes tamperFlash {
+    0% { opacity: 0; transform: translateY(-100%); }
+    50% { opacity: 1; transform: translateY(2px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

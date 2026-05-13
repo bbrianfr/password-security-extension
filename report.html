@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Audit Report</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            padding: 40px; 
+            color: #1f2328; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            line-height: 1.6; 
+            background-color: #f6f8fa;
+        }
+        * { box-sizing: border-box; }
+        
+        .no-print-bar { 
+            background: #ffffff; 
+            padding: 15px 25px; 
+            border-bottom: 1px solid #d0d7de; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .btn-print { 
+            background: #0F2847; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print:hover { background: #1A365D; }
+        
+        .report-content {
+            background: white;
+            padding: 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .report-header { 
+            border-bottom: 4px solid #0F2847; 
+            padding-bottom: 25px; 
+            margin-bottom: 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+        }
+        h1 { color: #0F2847; margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 1px; }
+        .meta { color: #666; font-size: 14px; }
+        
+        .section { margin-bottom: 30px; background: #ffffff; padding: 25px; border-radius: 12px; border: 1px solid #d0d7de; }
+        h2 { margin-top: 0; font-size: 18px; color: #0F2847; border-bottom: 1px solid #eaecef; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .label { font-weight: bold; color: #57606a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .value { font-size: 16px; color: #1f2328; margin-top: 5px; font-weight: 500; }
+        
+        .result-box { padding: 40px; text-align: center; border-radius: 12px; margin-top: 25px; border: 2px dashed #DDE1E6; }
+        .success { background-color: #f0fff4; border-color: #238636; color: #238636; }
+        .failure { background-color: #fff5f5; border-color: #cf222e; color: #cf222e; }
+        
+        .plaintext { 
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; 
+            font-size: 3.5em; 
+            font-weight: 800; 
+            margin: 20px 0; 
+            word-break: break-all;
+        }
+        .footer { margin-top: 60px; border-top: 1px solid #eaecef; padding-top: 20px; font-size: 12px; color: #57606a; text-align: center; }
+        
+        @media print { 
+            body { padding: 0; background-color: white; } 
+            .no-print-bar { display: none !important; }
+            .report-content { box-shadow: none; padding: 0; }
+            .section { break-inside: avoid; border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print-bar">
+        <span style="font-weight:bold; font-size: 16px; color: #0F2847;">📄 Report Preview</span>
+        <button id="btnPrint" class="btn-print">
+            <span>🖨️</span> Save as PDF / Print Report
+        </button>
+    </div>
+
+    <div class="report-content">
+        <div class="report-header">
+            <div>
+                <h1>Security Audit Report</h1>
+                <div id="sessionMeta" class="meta">Analysis Session ID: ...</div>
+            </div>
+            <div id="dateMeta" class="meta" style="text-align: right;">Date: ...</div>
+        </div>
+
+        <div class="section">
+            <h2>Session Parameters</h2>
+            <div class="grid">
+                <div>
+                    <div class="label">Attack Strategy</div>
+                    <div id="valMode" class="value">...</div>
+                </div>
+                <div>
+                    <div class="label">Dictionary Status</div>
+                    <div id="valDict" class="value">...</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="label">Target Hash (SHA-256)</div>
+                <div id="valHash" class="value" style="font-size: 14px; word-break: break-all;">...</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Performance Metrics</h2>
+            <div class="grid">
+                <div>
+                    <div class="label">Total Execution Time</div>
+                    <div id="valDuration" class="value">...</div>
+                </div>
+                <div>
+                    <div class="label">Average Speed</div>
+                    <div id="valSpeed" class="value">...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Audit Result</h2>
+            <div id="resultBox" class="result-box">
+                <div class="label" style="color: inherit;">Recovered Plaintext</div>
+                <div id="valResult" class="plaintext">...</div>
+                <div id="valStatus" class="label" style="color: inherit;">Current Security Status: ...</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>FYP Project: Password Security Analysis Tool</strong><br>
+            This document is generated for educational and auditing purposes.<br>
+            &copy; 2026 - Cybersecurity VAPT Simulation
+        </div>
+    </div>
+
+    <script src="report.js"></script>
+</body>
+</html>
